@@ -1,0 +1,53 @@
+//Problem PRETNUM form Codechef
+import java.io.*;
+import java.util.*;
+public class PRETNUM_Divisors {
+
+	static InputReader in=new InputReader(System.in);
+	static PrintWriter out=new PrintWriter(System.out);
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+        int t;
+        long m,n;
+        t=in.readInt();
+        while(t-->0)
+        {
+        	m=in.readLong();
+        	n=in.readLong();
+        	divisors(m,n);
+    		int count=0;
+        	ArrayList<Long> list=sieve(5000L);
+        	long div[]=divisors(m,n);
+    		for(long i:list)
+    			for(long j=m;j<=n;j++)
+    			{
+    				if(div[(int)(j-m)]==i)
+    					count++;
+    			}
+        	out.println(count);
+        }
+        out.flush();
+        out.close();
+	}
+	
+    public static ArrayList<Long> sieve(long n)
+    {
+    	int i,j;
+    	ArrayList<Long> list=new ArrayList<Long>();
+    	int n_n=(int)Math.sqrt(n);
+    	boolean tp[]=new boolean[10000001];
+    	tp[0]=tp[1]=true;
+    	for(i=2;i<=n_n;i++)
+    	{
+    		if(!tp[i])
+    		for(j=2*i;j<=n;j+=i)
+    		{
+    			tp[j]=true;
+    		}
+    	}
+    	for(j=2;j<=n;j++)
+    	  if(!tp[j])
+    		list.add((long)j);
+    	return list;
+    }
+}

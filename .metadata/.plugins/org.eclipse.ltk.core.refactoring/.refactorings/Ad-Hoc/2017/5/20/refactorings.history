@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;Divisors&apos; to &apos;PRETNUM_Divisors&apos;&#x0D;&#x0A;- Original project: &apos;Ad-Hoc&apos;&#x0D;&#x0A;- Original element: &apos;Divisors&apos;&#x0D;&#x0A;- Renamed element: &apos;PRETNUM_Divisors&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Divisors&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{Divisors.java[Divisors" matchStrategy="1" name="PRETNUM_Divisors" qualified="false" references="true" similarDeclarations="false" stamp="1494783955863" textual="false" version="1.0"/>
+</session>

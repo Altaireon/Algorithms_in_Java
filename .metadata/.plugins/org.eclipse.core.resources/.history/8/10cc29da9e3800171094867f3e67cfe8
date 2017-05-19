@@ -1,0 +1,104 @@
+//Problem PRIME1 form SPOJ
+import java.io.*;
+import java.util.*;
+public class Divisors {
+
+	static InputReader in=new InputReader(System.in);
+	static PrintWriter out=new PrintWriter(System.out);
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+        int t;
+        long m,n;
+        t=in.readInt();
+        while(t-->0)
+        {
+        	m=in.readLong();
+        	n=in.readLong();
+        	long n_n=(long)Math.sqrt(n);
+        	ArrayList<Long> list=sieve(50L);
+        	ArrayList<Long> ans=sieve(n_n);
+        	int mark[]=new int[(int)(n-m+1)];
+    		for(long j=m;j<=n;j++)
+    		{
+    			long tp=j;
+    			for(long i:ans)
+    			{
+    				while(tp%i==0)
+    				{
+    					mark[(int)(j-m)]++;
+    					tp/=i;
+    				}
+    				if(tp==1)
+    					break;
+    			}
+				if(tp!=1)
+					mark[(int)(j-m)]++;
+    		}
+    		int count=0;
+    		for(long i:list)
+    			for(long j=m;j<=n;j++)
+    			{
+    				if(mark[(int)(j-m)]==i)
+    					{count++;out.println(j);}
+    			}
+        	out.println(count);
+        }
+        out.flush();
+        out.close();
+	}
+    public static ArrayList<Long> sieve(long n)
+    {
+    	int i,j;
+    	ArrayList<Long> list=new ArrayList<Long>();
+    	int n_n=(int)Math.sqrt(n);
+    	boolean tp[]=new boolean[10000001];
+    	tp[0]=tp[1]=true;
+    	for(i=2;i<=n_n;i++)
+    	{
+    		if(!tp[i])
+    		for(j=2*i;j<=n;j+=i)
+    		{
+    			tp[j]=true;
+    		}
+    	}
+    	for(j=2;j<=n;j++)
+    	  if(!tp[j])
+    		list.add((long)j);
+    	return list;
+    }
+    public static ArrayList<Long> segmented_sieve(long m,long n)
+    {
+    	long tp,lb,ub,j;
+    	int n_n=(int)Math.sqrt(n);
+    	ArrayList<Long> ans=sieve(n_n);
+    	if(n_n<m)
+    		lb=m;
+    	else
+    		lb=n_n+1;
+    	ub=lb+n_n;
+    	ArrayList<Long> ans1=new ArrayList<Long>();
+    	while(ub<=n)
+    	{
+    		boolean mark[]=new boolean[(int)(ub-lb+2)];
+    		for(long i:ans)
+    		{
+    			tp=(long)Math.ceil((double)lb/i)*i;
+    			for(j=tp;j<=ub;j+=i)
+    				mark[(int)(j-lb)]=true;
+    		}
+    		for(j=lb;j<=ub;j++)
+    			if(!mark[(int)(j-lb)])
+    				ans.add(j);
+    		lb=ub+1;
+    		ub=lb+n_n;
+    		if(lb>n)
+    			break;
+    		if(ub>=n)
+    			ub=n;
+    	}
+    	for(long i:ans)
+    		if(i>=m&&i<=n)
+    			ans1.add(i);
+    	return ans1;
+    }
+}

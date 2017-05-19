@@ -1,0 +1,77 @@
+//Problem PRIME1 form SPOJ
+import java.io.*;
+import java.util.*;
+public class Divisors {
+
+	static InputReader in=new InputReader(System.in);
+	static PrintWriter out=new PrintWriter(System.out);
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+        int t;
+        long m,n;
+        t=in.readInt();
+        while(t-->0)
+        {
+        	m=in.readLong();
+        	n=in.readLong();
+        	long n_n=(long)Math.sqrt(n);
+        	ArrayList<Long> list=sieve(50L);
+        	ArrayList<Long> ans=sieve(n_n);
+        	long mark[]=new long[(int)(n-m+1)];
+        	set(mark,1);
+    		for(long j=m;j<=n;j++)
+    		{
+    			long tp=j;
+    			for(long i:ans)
+    			{
+    				int ct=0;
+    				while(tp%i==0)
+    				{
+    					ct++;
+    					tp/=i;
+    				}
+    				mark[(int)(j-m)]*=ct+1;
+    				if(tp==1)
+    					break;
+    			}
+				if(tp!=1)
+					mark[(int)(j-m)]*=2;
+    		}
+    		int count=0;
+    		for(long i:list)
+    			for(long j=m;j<=n;j++)
+    			{
+    				if(mark[(int)(j-m)]==i)
+    					{count++;out.println(j+" "+i);}
+    			}
+        	out.println(count);
+        }
+        out.flush();
+        out.close();
+	}
+	public static void set(long a[],long val)
+	{
+		for(int i=0;i<a.length;i++)
+			a[i]=val;
+	}
+    public static ArrayList<Long> sieve(long n)
+    {
+    	int i,j;
+    	ArrayList<Long> list=new ArrayList<Long>();
+    	int n_n=(int)Math.sqrt(n);
+    	boolean tp[]=new boolean[10000001];
+    	tp[0]=tp[1]=true;
+    	for(i=2;i<=n_n;i++)
+    	{
+    		if(!tp[i])
+    		for(j=2*i;j<=n;j+=i)
+    		{
+    			tp[j]=true;
+    		}
+    	}
+    	for(j=2;j<=n;j++)
+    	  if(!tp[j])
+    		list.add((long)j);
+    	return list;
+    }
+}
